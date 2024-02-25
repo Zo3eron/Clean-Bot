@@ -1,4 +1,7 @@
 com\company\Clean\Bot\CleanBotApplication.class
 com\company\Clean\Bot\RegisBot.class
 com\company\Clean\Bot\CleanBot.class
+com\company\Clean\Bot\User$UserBuilder.class
+com\company\Clean\Bot\UserRepository.class
+com\company\Clean\Bot\User.class
 com\company\Clean\Bot\RedisConfig.class

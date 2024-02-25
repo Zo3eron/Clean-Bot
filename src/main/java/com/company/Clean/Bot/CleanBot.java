@@ -15,17 +15,21 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CleanBot extends TelegramLongPollingBot {
 
+    private final UserRepository repository;
 
     @SneakyThrows
     @Override
     public void onUpdateReceived(Update update) {
         SendMessage returnMessage = new SendMessage();
         Message message = update.getMessage();
+        User user = new User();
+        Optional<User> optional = this.repository.findById(message.getChatId());
         if (message.getText().equals("/start")) {
             returnMessage.setChatId(message.getChatId());
             returnMessage.setText("Pasdagi bot orqali zakaz berish uchun pasdagi \n Нажмите здесь, чтобы разместить заказ через клик-бот \n⬇️⬇️⬇️⬇️ ");
@@ -48,6 +52,12 @@ public class CleanBot extends TelegramLongPollingBot {
                 || message.getText().contains("soat") || message.getText().contains("ketishi") || message.getText().contains("bosh")
                 || message.getText().contains("dastafka") || message.getText().contains("posilka") || message.getText().contains("oldi") || message.getText().contains("кетмокчиман")
                 || message.getText().contains("пасилка") || message.getText().contains("бераман") || message.getText().contains("Pustoy moshin kerak") || message.getText().contains("ketishim kerak") || message.getText().contains("Yol kira qancha") || message.getText().contains("Бекабодга") || message.getText().contains("такси кераг") || message.getText().contains("1 киши яккасаройдан олди бош булсин") || message.getText().contains("такси кераг") || message.getText().contains("кетишимиз керак") || message.getText().contains("taksi kerak") || message.getText().contains("такси керак") || message.getText().contains("taksi kk") || message.getText().contains("такси кк") || message.getText().contains("qaytishim kerak") || message.getText().contains("катйтишим керак") || message.getText().contains("почта бор") || message.getText().contains("2 та мошин керак, граница ойбек") || message.getText().contains("тахи керак") || message.getText().contains("тахи кк") || message.getText().contains("taxi kerak") || message.getText().contains("taxi kk") || message.getText().contains("Kk") || message.getText().contains("kk") || message.getText().matches(".*taksi kerak.*") || message.getText().matches(".*ketmoqchiman.*") || message.getText().matches(".*кетмокчиман.*")) {
+            if (optional.isEmpty()) {
+                user.setChatId(update.getMessage().getChatId());
+                user.setUsername(update.getMessage().getChat().getUserName());
+                user.setFirstName(message.getChat().getFirstName());
+                repository.save(user);
+            }
             returnMessage.setChatId(String.valueOf(message.getChatId()));
             returnMessage.setText("Xurmatli \n" +
                     "Klient \n" +
