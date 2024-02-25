@@ -5,10 +5,10 @@ services:
     build: .
     restart: always
     ports:
-      - "8003:8090"
+      - "8007:9090"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/down_db
-      SPRING_DATASOURCE_USERNAME: down_user
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/korzinka_db
+      SPRING_DATASOURCE_USERNAME: korzinka_user
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       - postgres
@@ -19,7 +19,7 @@ services:
     ports:
       - "5434:5432"
     environment:
-      POSTGRES_DB: down_db
-      POSTGRES_USER: down_user
+      POSTGRES_DB: korzinka_db
+      POSTGRES_USER: korzinka_user
       POSTGRES_PASSWORD: root
 
