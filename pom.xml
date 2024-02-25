@@ -104,7 +104,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>teksi-bot</finalName>
+		<finalName>clean-bot</finalName>
 	</build>
 
 </project>
